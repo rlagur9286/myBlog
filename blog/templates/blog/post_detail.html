@@ -2,10 +2,30 @@
 {% block title %}{{ post.title }}{% endblock %}
 {%  block extrahead %}
     <style>
-        .post_photo{
+        .post_photo {
             max-width: 100%;
         }
+        .post_map {
+            width: 300px;
+            height: 300px;
+        }
     </style>
+    <script>
+        $(function(){
+            var myLatLng = {lat: -25.363, lng: 131.044};
+            var container = $('.post_map')[0];
+            var map = new google.maps.Map(container, {
+                zoom: 4,
+                center: myLatLng
+            });
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+        });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
 {% endblock %}
 {%  block content %}
     <div class="container">
@@ -14,6 +34,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         {{ post.title }}
+                    </div>
+                    <div class="post_map">
+
                     </div>
                     <div class="panel-body">
                         {% if post.photo %}
