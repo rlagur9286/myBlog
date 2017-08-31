@@ -1,3 +1,5 @@
+{% extends "accounts/layout.html" %}
+{% block content %}
 <h1>
     {{ user }}'s Profile
 </h1>
@@ -6,3 +8,4 @@
     <tr><th>EMAIL</th><td>{{ user.email }}</td></tr>
     <tr><th>DATE JOIN</th><td>user.date_joined</td></tr>
 </table>
+{% endblock %}
