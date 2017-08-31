@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from django.contrib.auth.views import login
+from django.contrib.auth.views import login, logout
 from . import views
 
 urlpatterns = [
@@ -7,5 +7,8 @@ urlpatterns = [
         'template_name': 'accounts/login_form.html',
     }),
     url(r'signup/$', views.signup, name='signup'),
+    url(r'logout/$', logout, name='logout', kwargs={
+        'next_page': 'login',
+    }),
     url(r'profile/$', views.profile, name='profile'),
 ]
