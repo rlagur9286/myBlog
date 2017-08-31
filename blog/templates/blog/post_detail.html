@@ -12,22 +12,22 @@
     </style>
     {% if post.lnglat %}
         <script>
-        $(function(){
-            var lat = {{ post.lat }};
-            var lng = {{ post.lng }};
-            var myLatLng = {lat: lat, lng: lng};
-            var container = $('.post_map')[0];
-            var map = new google.maps.Map(container, {
-                zoom: 15,
-                center: myLatLng
+            $(function(){
+                var lat = {{ post.lat }};
+                var lng = {{ post.lng }};
+                var myLatLng = {lat: lat, lng: lng};
+                var container = $('.post_map')[0];
+                var map = new google.maps.Map(container, {
+                    zoom: 15,
+                    center: myLatLng
+                });
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    title: 'Hello World!'
+                });
             });
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'Hello World!'
-            });
-        });
-    </script>
+        </script>
     {% endif %}
 
     <script src="https://maps.googleapis.com/maps/api/js"></script>
@@ -40,20 +40,35 @@
                     <div class="panel-heading">
                         {{ post.title }}
                     </div>
-                    <div class="post_map">
-
-                    </div>
                     <div class="panel-body">
                         {% if post.photo %}
                             <img src="{{ post.photo.url }}" class="post_photo"/>
                         {% endif %}
                         <hr/>
+                        <div class="post_map"></div>
                         {{ post.content|linebreaks }}
+                        <hr/>
+                        <ul>
+                            {% for comment in post.comment_set.all %}
+                                <li>
+                                    {{ comment.message }}
+                                    by {{ comment.author }}
+                                    {{ comment.created_at }}
+                                    {% if comment.author == request.user %}
+                                        <a href="{{ comment.get_edit_url }}">수정</a>
+                                        <a href="{{ comment.get_delete_url }}" class="text-danger">삭제</a>
+                                        </li>
+                                    {% endif %}
+                            {% endfor %}
+                        </ul>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-footer">
                             <a href="{% url "blog:index" %}" class="btn btn-default">
                                 목록으로
+                            </a>
+                            <a href="{% url "blog:comment_new" post.pk %}" class="btn btn-primary">
+                                댓글 쓰기
                             </a>
                         </div>
                     </div>

@@ -1,3 +1,4 @@
+from .models import Comment
 from .models import Post
 from django import forms
 from photowall.widgets.naver_map_widget import NaverMapPointWidget
@@ -11,3 +12,9 @@ class PostForm(forms.ModelForm):
         widgets = {
             'lnglat': NaverMapPointWidget(attrs={'width': 200, 'height': 200}),
         }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['message']
