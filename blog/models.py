@@ -3,7 +3,7 @@ import re
 from django import forms
 from django.db import models
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 def lnglat_validator(value):
@@ -39,8 +39,8 @@ class Post(models.Model):
 
 class Comment(models.Model):
     # post : comment = 1 : N
-    post = models.ForeignKey(Post)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    post = models.ForeignKey(Post, on_delete=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=True)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
